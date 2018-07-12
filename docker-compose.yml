@@ -1,0 +1,57 @@
+version: "2"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.5.60
+    restart: always
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/mysqld.conf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=adminadmin
+    networks:
+      - zentao-server    
+  nginx:
+    container_name: nginx
+    restart: always
+    image: nginx:1.13
+    ports:
+      - 80:80
+      - 8080:8080
+      - 443:443
+      - 5050:5050
+      - 5553:5553
+    volumes:
+      - ./conf/vhosts:/etc/nginx/conf.d
+      - ./logs:/var/log/nginx
+      - ./www/:/var/www/
+    networks:
+      - zentao-server  
+  php5:
+    container_name: php5
+    restart: always
+    image: php:5.6-fpm
+    volumes:
+      - ./www/:/var/www/
+      - ./conf/php/:/usr/local/etc/php/conf.d/
+    expose: 
+      - 9000
+    networks:
+      - zentao-server
+    command: 
+      - /bin/bash
+      - -c
+      - |
+          docker-php-ext-install pdo_mysql mysqli
+          php-fpm
+networks:
+  zentao-server:
+    driver: bridge
+
+
+
+
+
