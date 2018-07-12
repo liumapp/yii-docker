@@ -9,11 +9,11 @@ services:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/conf/mysqld.conf:/etc/mysql/mysql.conf.d/mysqld.cnf
     ports:
-      - 3306:3306
+      - 3307:3306
     environment:
       - MYSQL_ROOT_PASSWORD=adminadmin
     networks:
-      - zentao-server    
+      - yii-docker
   nginx:
     container_name: nginx
     restart: always
@@ -29,7 +29,7 @@ services:
       - ./logs:/var/log/nginx
       - ./www/:/var/www/
     networks:
-      - zentao-server  
+      - yii-docker
   php5:
     container_name: php5
     restart: always
@@ -40,7 +40,7 @@ services:
     expose: 
       - 9000
     networks:
-      - zentao-server
+      - yii-docker
     command: 
       - /bin/bash
       - -c
@@ -48,7 +48,7 @@ services:
           docker-php-ext-install pdo_mysql mysqli
           php-fpm
 networks:
-  zentao-server:
+  yii-docker:
     driver: bridge
 
 
