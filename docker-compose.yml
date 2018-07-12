@@ -1,8 +1,8 @@
 version: "2"
 
 services:
-  mysql5:
-    container_name: mysql5
+  mysql5.5:
+    container_name: mysql5.5
     image: mysql:5.5.60
     restart: always
     volumes:
@@ -14,12 +14,11 @@ services:
       - MYSQL_ROOT_PASSWORD=adminadmin
     networks:
       - yii-docker
-  nginx:
-    container_name: nginx
+  nginx1.13:
+    container_name: nginx1.13
     restart: always
     image: nginx:1.13
     ports:
-      - 443:443
       - 6060:6060
       - 5553:5553
     volumes:
@@ -28,8 +27,8 @@ services:
       - ./www/:/var/www/
     networks:
       - yii-docker
-  php5:
-    container_name: php5
+  php5.6:
+    container_name: php5.6
     restart: always
     image: php:5.6-fpm
     volumes:
