@@ -35,6 +35,7 @@ services:
     volumes:
       - ./www/:/var/www/
       - ./conf/php/:/usr/local/etc/php/conf.d/
+      - ./extension/:/tmp/extension/
     expose: 
       - 9000
     networks:
@@ -43,7 +44,7 @@ services:
       - /bin/bash
       - -c
       - |
-          docker-php-ext-install pdo_mysql mysqli
+          docker-php-ext-install pdo_mysql mysqli gd
           php-fpm
 networks:
   yii-docker:
